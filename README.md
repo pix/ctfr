@@ -33,6 +33,7 @@ Parameters and examples of use.
 ```
 -d --domain [target_domain] (required)
 -o --output [output_file] (optional)
+-c --check (optional, try to resolve the domain)
 ```
 
 ### Examples
@@ -41,6 +42,10 @@ $ python3 ctfr.py -d starbucks.com
 ```
 ```bash
 $ python3 ctfr.py -d facebook.com -o /home/shei/subdomains_fb.txt
+```
+```bash
+$ python3 ctfr.py -d example.com --check -o example.com.txt 2>/dev/null
+www.example.com
 ```
 
 ### With Docker
