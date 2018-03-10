@@ -8,6 +8,7 @@
 
 ## # LIBRARIES # ##
 import re
+import sys
 import json
 import requests
 
@@ -35,7 +36,7 @@ def banner():
      Version {v} - Hey don't miss AXFR!
     Made by Sheila A. Berta (UnaPibaGeek)
 	'''.format(v=version)
-	print(b)
+	print(b, file=sys.stderr)
 	
 def clear_url(target):
 	return re.sub('.*www\.','',target,1).split('/')[0].strip()
@@ -56,7 +57,7 @@ def main():
 	req = requests.get("https://crt.sh/?q=%.{d}&output=json".format(d=target))
 
 	if req.status_code != 200:
-		print("[X] Error! Invalid domain or information not available!") 
+		print("[X] Error! Invalid domain or information not available!", file=sys.stderr)
 		exit(1)
 
 	json_data = json.loads('[{}]'.format(req.text.replace('}{', '},{')))
@@ -65,16 +66,16 @@ def main():
 		subdomains.append(value['name_value'])
 
 	
-	print("\n[!] ---- TARGET: {d} ---- [!] \n".format(d=target))
+	print("\n[!] ---- TARGET: {d} ---- [!] \n".format(d=target), file=sys.stderr)
 
 	subdomains = sorted(set(subdomains))
 
 	for subdomain in subdomains:
-		print("[-]  {s}".format(s=subdomain))
+		print("{s}".format(s=subdomain))
 		if output is not None:
 			save_subdomains(subdomain,output)
 
-	print("\n\n[!]  Done. Have a nice day! ;).")
+	print("\n\n[!]  Done. Have a nice day! ;).", file=sys.stderr)
 
 
 main()
